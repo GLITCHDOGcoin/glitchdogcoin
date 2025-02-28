@@ -96,7 +96,6 @@
             color: #ffeb3b;
             font-style: italic;
         }
-        /* Косточки на заднем плане */
         .bones-container {
             position: fixed;
             top: 0;
@@ -163,8 +162,8 @@
             to { opacity: 1; transform: scaleX(1); }
         }
         @keyframes woofFly {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
+            0% { opacity: 1; transform: translateX(0) translateY(0); }
+            100% { opacity: 0; transform: translateX(var(--x-end)) translateY(var(--y-end)) rotate(var(--rotate-end)); }
         }
         @keyframes fall {
             0% { top: -32px; opacity: 1; transform: rotate(0deg) translateX(0); }
@@ -230,7 +229,7 @@
         <h1>$GLITCHDOG</h1>
         <p>The pixel pup that barks to the moon!</p>
         <div class="dog-container">
-            <img src="https://i.yapx.ru/YgOgD.jpg" alt="Glitchdog" class="dog-img">
+            <img src="glitchdog.jpg" alt="Glitchdog" class="dog-img">
         </div>
         <div class="token-address">
             <span class="token-address-placeholder">Token Address: [Insert your token address here]</span>
@@ -254,44 +253,25 @@
     <script>
         const btn = document.querySelector('.btn');
         btn.addEventListener('mouseover', () => {
-            // Удаляем старые Woof!, если они есть
             document.querySelectorAll('.woof').forEach(w => w.remove());
-
-            // Создаём три Woof!
             for (let i = 0; i < 3; i++) {
                 const woof = document.createElement('span');
                 woof.className = 'woof';
                 woof.textContent = 'Woof!';
                 woof.style.left = '50%';
                 woof.style.top = '50%';
-
-                // Рандомные значения для направления
-                const xDirection = (Math.random() - 0.5) * 300; // от -150px до +150px
-                const yDirection = -Math.random() * 200 - 50; // от -50px до -250px
-                const rotate = (Math.random() - 0.5) * 60; // от -30° до +30°
-                const delay = i * 0.2; // Задержка 0s, 0.2s, 0.4s
-
-                // Применяем стили с рандомным разлётом
+                const xDirection = (Math.random() - 0.5) * 300;
+                const yDirection = -Math.random() * 200 - 50;
+                const rotate = (Math.random() - 0.5) * 60;
+                const delay = i * 0.2;
                 woof.style.animationDelay = `${delay}s`;
                 woof.style.setProperty('--x-end', `${xDirection}px`);
                 woof.style.setProperty('--y-end', `${yDirection}px`);
                 woof.style.setProperty('--rotate-end', `${rotate}deg`);
-
-                // Добавляем Woof! к кнопке
                 btn.appendChild(woof);
-
-                // Удаляем после завершения анимации
                 woof.addEventListener('animationend', () => woof.remove());
             }
         });
-
-        // Обновляем анимацию через CSS-переменные
-        document.styleSheets[0].insertRule(`
-            @keyframes woofFly {
-                0% { opacity: 1; transform: translateX(0) translateY(0); }
-                100% { opacity: 0; transform: translateX(var(--x-end)) translateY(var(--y-end)) rotate(var(--rotate-end)); }
-            }
-        `, 0);
     </script>
 </body>
 </html>
