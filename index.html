@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$GLITCHDOG - Pixel Meme Coin</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #00ffcc, #ff00ff, #3f51b5);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 4.5em;
+            margin: 0;
+            color: #fff;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #ff00ff, 0 0 30px #3f51b5;
+            animation: neonPulse 2s infinite ease-in-out;
+        }
+        .hero p {
+            font-size: 1.5em;
+            color: #fff;
+            text-shadow: 0 0 5px #ff00ff, 0 0 10px #00ffcc, 0 0 15px #3f51b5;
+            margin: 20px 0;
+            animation: shadowShift 3s infinite ease-in-out;
+        }
+        .btn {
+            padding: 15px 40px;
+            background: #ff00ff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3em;
+            box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffcc;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+            background: #00ffcc;
+            box-shadow: 0 0 30px #00ffcc, 0 0 60px #ff00ff;
+            animation: buttonGlow 0.5s infinite alternate;
+        }
+        .woof {
+            position: absolute;
+            font-size: 1.2em;
+            color: #ffeb3b;
+            text-shadow: 0 0 5px #ff00ff, 0 0 10px #00ffcc;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            animation: woofFly 1.2s ease-out forwards;
+        }
+        .dog-container {
+            margin: 30px auto;
+            width: 250px;
+            height: 250px;
+            position: relative;
+            z-index: 2;
+        }
+        .dog-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px #00ffcc) drop-shadow(0 0 20px #ff00ff);
+            image-rendering: pixelated;
+            animation: sway 4s infinite ease-in-out;
+        }
+        .token-address {
+            margin: 20px auto;
+            padding: 15px;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            font-size: 1.2em;
+            color: #fff;
+            text-shadow: 0 0 5px #ff00ff;
+            text-align: center;
+            animation: borderPulse 3s infinite ease-in-out;
+        }
+        .token-address-placeholder {
+            color: #ffeb3b;
+            font-style: italic;
+        }
+        /* Косточки на заднем плане */
+        .bones-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .bone {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text x="50%" y="50%" font-size="20" fill="%23ffffff" text-anchor="middle" dominant-baseline="middle">🦴</text><circle cx="30" cy="30" r="2" fill="%2300ffcc"/></svg>') no-repeat center;
+            background-size: contain;
+            filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #ffeb3b);
+            animation: fall 5s infinite linear;
+        }
+        .bone:nth-child(1) { left: 10%; animation-duration: 5s; animation-delay: 0s; }
+        .bone:nth-child(2) { left: 30%; animation-duration: 6s; animation-delay: 1s; }
+        .bone:nth-child(3) { left: 50%; animation-duration: 4s; animation-delay: 2s; }
+        .bone:nth-child(4) { left: 70%; animation-duration: 7s; animation-delay: 0.5s; }
+        .bone:nth-child(5) { left: 90%; animation-duration: 5.5s; animation-delay: 3s; }
+        .neon-line {
+            position: absolute;
+            background: linear-gradient(90deg, #00ffcc, #ff00ff);
+            height: 2px;
+            width: 100%;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        .neon-line.top { top: 0; animation: lineGlow 5s infinite alternate; }
+        .neon-line.bottom { bottom: 0; animation: lineGlow 5s infinite alternate-reverse; }
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #ff00ff; }
+            50% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #ff00ff, 0 0 60px #3f51b5; }
+            100% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #ff00ff; }
+        }
+        @keyframes shadowShift {
+            0% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #00ffcc; }
+            50% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #ff00ff; }
+            100% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #00ffcc; }
+        }
+        @keyframes buttonGlow {
+            from { box-shadow: 0 0 20px #00ffcc, 0 0 40px #ff00ff; }
+            to { box-shadow: 0 0 40px #00ffcc, 0 0 80px #ff00ff; }
+        }
+        @keyframes borderPulse {
+            0% { border-color: #00ffcc; }
+            50% { border-color: #ff00ff; }
+            100% { border-color: #00ffcc; }
+        }
+        @keyframes lineGlow {
+            from { opacity: 0.7; transform: scaleX(0.9); }
+            to { opacity: 1; transform: scaleX(1); }
+        }
+        @keyframes woofFly {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @keyframes fall {
+            0% { top: -32px; opacity: 1; transform: rotate(0deg) translateX(0); }
+            50% { transform: rotate(180deg) translateX(20px); }
+            100% { top: 100vh; opacity: 0.2; transform: rotate(360deg) translateX(-10px); }
+        }
+        .section {
+            padding: 50px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .section h2 {
+            font-size: 2.5em;
+            color: #fff;
+            text-shadow: 0 0 10px #3f51b5, 0 0 20px #ff00ff;
+            animation: shadowShift 3s infinite ease-in-out;
+        }
+        .section p {
+            color: #fff;
+            font-size: 1.2em;
+            text-shadow: 0 0 5px #00ffcc;
+        }
+        footer {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        footer a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            text-shadow: 0 0 5px #ff00ff, 0 0 10px #00ffcc;
+            transition: text-shadow 0.3s;
+        }
+        footer a:hover {
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffcc;
+        }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 3em; }
+            .hero p { font-size: 1em; }
+            .btn { font-size: 1em; padding: 10px 20px; }
+            .woof { font-size: 0.9em; }
+            .dog-container { width: 200px; height: 200px; }
+            .token-address { font-size: 1em; padding: 10px; max-width: 90%; }
+            .bone { width: 24px; height: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bones-container">
+        <div class="bone"></div>
+        <div class="bone"></div>
+        <div class="bone"></div>
+        <div class="bone"></div>
+        <div class="bone"></div>
+    </div>
+    <div class="neon-line top"></div>
+    <div class="hero">
+        <h1>$GLITCHDOG</h1>
+        <p>The pixel pup that barks to the moon!</p>
+        <div class="dog-container">
+            <img src="https://i.yapx.ru/YgOgD.jpg" alt="Glitchdog" class="dog-img">
+        </div>
+        <div class="token-address">
+            <span class="token-address-placeholder">Token Address: [Insert your token address here]</span>
+        </div>
+        <a href="https://pump.fun" class="btn">Buy on Pump.Fun</a>
+    </div>
+    <div class="section">
+        <h2>About $GLITCHDOG</h2>
+        <p>$GLITCHDOG is more than just a meme coin — it's a vibrant community-driven project with unique benefits for holders! Here are some perks:<br>
+        - <strong>Exclusive Rewards:</strong> Earn passive bonuses through staking.<br>
+        - <strong>Community Power:</strong> Be part of a growing pack with voting rights.<br>
+        - <strong>NFT Drop Soon:</strong> In the near future, exclusive NFTs will be distributed to $GLITCHDOG holders!<br>
+        Join the neon revolution and howl your way to the moon!</p>
+    </div>
+    <footer>
+        <a href="https://t.me/GlitchDogCoin">Telegram</a>
+        <a href="https://x.com/GlitchDogCoin">Twitter</a>
+    </footer>
+    <div class="neon-line bottom"></div>
+
+    <script>
+        const btn = document.querySelector('.btn');
+        btn.addEventListener('mouseover', () => {
+            // Удаляем старые Woof!, если они есть
+            document.querySelectorAll('.woof').forEach(w => w.remove());
+
+            // Создаём три Woof!
+            for (let i = 0; i < 3; i++) {
+                const woof = document.createElement('span');
+                woof.className = 'woof';
+                woof.textContent = 'Woof!';
+                woof.style.left = '50%';
+                woof.style.top = '50%';
+
+                // Рандомные значения для направления
+                const xDirection = (Math.random() - 0.5) * 300; // от -150px до +150px
+                const yDirection = -Math.random() * 200 - 50; // от -50px до -250px
+                const rotate = (Math.random() - 0.5) * 60; // от -30° до +30°
+                const delay = i * 0.2; // Задержка 0s, 0.2s, 0.4s
+
+                // Применяем стили с рандомным разлётом
+                woof.style.animationDelay = `${delay}s`;
+                woof.style.setProperty('--x-end', `${xDirection}px`);
+                woof.style.setProperty('--y-end', `${yDirection}px`);
+                woof.style.setProperty('--rotate-end', `${rotate}deg`);
+
+                // Добавляем Woof! к кнопке
+                btn.appendChild(woof);
+
+                // Удаляем после завершения анимации
+                woof.addEventListener('animationend', () => woof.remove());
+            }
+        });
+
+        // Обновляем анимацию через CSS-переменные
+        document.styleSheets[0].insertRule(`
+            @keyframes woofFly {
+                0% { opacity: 1; transform: translateX(0) translateY(0); }
+                100% { opacity: 0; transform: translateX(var(--x-end)) translateY(var(--y-end)) rotate(var(--rotate-end)); }
+            }
+        `, 0);
+    </script>
+</body>
+</html>
